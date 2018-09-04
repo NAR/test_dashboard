@@ -2,10 +2,10 @@
 
 #
 # Updates the dashboard with the current dialyzer,build,etc. results
-# Param $1: Name of column (dialyzer, build, test or coverage)
+# Param $1: Name of column (dialyzer, build, eunit, common_test or coverage)
 # Param $2: Number of dialyzer warnings; fail/success; number of failed tests; % of code covered
-# Param $3: If $1 is test, number of all tests. If $1 is build, the number of warnings
-# Param $4: If $1 is test, the number of skipped tests.
+# Param $3: If $1 is common_test or eunit, number of all tests. If $1 is build, the number of warnings
+# Param $4: If $1 is common_test, the number of skipped tests.
 #
 
 if [ "$TRAVIS_BRANCH" != "master" ]; then
@@ -65,7 +65,29 @@ case $1 in
         cell="[\![$text](https://img.shields.io/badge/build-$url_text-$color.svg)]($build_log_url)"
         sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
         ;;
-    ("test")
+    ("eunit")
+        if [ "$2" == "failed" ]; then
+            text="failed"
+            color="red"
+        else
+            if [ -z "$3" ]; then
+                echo "No total number of tests!"
+                exit 1
+            fi
+            if [ "$2" -eq 0 ]; then
+                color="green"
+                text="All $3 tests passed"
+	    else
+                color="red"
+                text="$2 tests failed out of $3"
+            fi
+        fi
+        url_text=`echo $text | sed 's/ /%20/g'`
+        eunit_log_url="$HISTORY_URL/eunit/$CI_PROJECT_NAME.log"
+        cell="[\![$text](https://img.shields.io/badge/eunit-$url_text-$color.svg)]($eunit_log_url)"
+        sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
+        ;;
+    ("common_test")
         if [ "$2" == "failed" ]; then
             text="build failed"
             color="red"
@@ -98,7 +120,7 @@ case $1 in
         url_text=`echo $text | sed 's/ /%20/g'`
         test_log_url="http://10.100.0.150:18080/$CI_PROJECT_NAME/latest/logs"
         cell="[\![$text](https://img.shields.io/badge/tests-$url_text-$color.svg)]($test_log_url)"
-        sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
+        sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
         ;;
     ("coverage")
         if [ "$2" == "failed" ]; then
@@ -120,7 +142,7 @@ case $1 in
         url_text=`echo $text | sed 's/%/%25/' | sed 's/ /%20/g'`
         cover_log_url="http://10.100.0.150:18080/$CI_PROJECT_NAME/latest/cover"
         cell="[\![$text](https://img.shields.io/badge/coverage-$url_text-$color.svg)]($cover_log_url)"
-        sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
+        sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
         ;;
     (*)
         echo "Invalid first parameter: $1"
@@ -128,5 +150,5 @@ case $1 in
 esac
 
 date=`TZ=UTC date "+%F %H:%M:%S %Z"`
-sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $date |," $dashboard_filename
+sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $date |," $dashboard_filename
 

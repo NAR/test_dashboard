@@ -9,7 +9,9 @@
 
 #cd ${CI_PROJECT_DIR}
 set -x
+lsb_release -a
 eval "$(ssh-agent -s)"
+chmod 600 scripts/updater.key
 ssh-add scripts/updater.key
 git clone git@github.com:NAR/dashboard.git
 

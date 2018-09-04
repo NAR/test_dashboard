@@ -1,8 +1,7 @@
 #!/bin/bash
 
 
-CI_PROJECT_NAME=test_dashboard
-output_name="dashboard/cover-output-${CI_PROJECT_NAME}.txt"
+output_name="dashboard/cover-output-${PROJECT_NAME}.txt"
 rebar3 cover --verbose | tee ${output_name}
 
 actual_coverage=`perl -ne 'print $1 if (/\|\s+total\s+\|\s+(\d+)/);' $output_name`

@@ -18,7 +18,7 @@ git stash
 git pull origin
 git stash pop
 git add *
-git commit -m "Add job ${CI_JOB_ID} for ${CI_PROJECT_NAME}"
+git commit -m "Add job ${TRAVIS_JOB_ID} for ${PROJECT_NAME}"
 git push
 
 cd -

@@ -3,9 +3,7 @@
 #
 #
 
-CI_PROJECT_NAME=test_dashboard
-
-output_name="dashboard/compile-output-${CI_PROJECT_NAME}.txt"
+output_name="dashboard/compile-output-${PROJECT_NAME}.txt"
 set -o pipefail
 rebar3 compile | tee $output_name
 if [ $? -ne 0 ]; then

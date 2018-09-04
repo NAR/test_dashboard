@@ -5,11 +5,9 @@
 # by Gitlab CI.
 #
 
-CI_PROJECT_NAME=test_dashboard
-
 # Run CT
 # Also: Extract passed/failed/skipped numbers and write history
-output_name="dashboard/ct-output-${CI_PROJECT_NAME}.txt"
+output_name="dashboard/ct-output-${PROJECT_NAME}.txt"
 
 if rebar3 ct --sname ctnode$$ --cover | tee ${output_name} ; then
     x_passed=`tail -n 5 ${output_name} | grep "passed." | perl -nle 'm/(\d+) tests passed\./; print $1'`

@@ -25,7 +25,6 @@ if [ "$#" -lt 2 -o "$#" -gt 4 ]; then
     exit 1
 fi
 
-CI_PROJECT_NAME=test_dashboard
 HISTORY_URL=https://github.com/NAR/dashboard/blob/master
 
 case $1 in
@@ -43,9 +42,9 @@ case $1 in
             text="$warnings warnings"
         fi
         url_text=`echo $text | sed 's/ /%20/g'`
-        dialyzer_log_url="$HISTORY_URL/dialyzer-output-$CI_PROJECT_NAME.txt"
+        dialyzer_log_url="$HISTORY_URL/dialyzer-output-$PROJECT_NAME.txt"
         cell="[\![$text](https://img.shields.io/badge/dialyzer-$url_text-$color.svg)]($dialyzer_log_url)"
-        sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
+        sed -i "/$PROJECT_NAME/s,\(|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
         ;;
     ("build")
         if [ "$2" == "failed" ]; then
@@ -61,9 +60,9 @@ case $1 in
             fi
         fi
         url_text=`echo $text | sed 's/ /%20/g'`
-        build_log_url="$HISTORY_URL/compile-output-$CI_PROJECT_NAME.txt"
+        build_log_url="$HISTORY_URL/compile-output-$PROJECT_NAME.txt"
         cell="[\![$text](https://img.shields.io/badge/build-$url_text-$color.svg)]($build_log_url)"
-        sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
+        sed -i "/$PROJECT_NAME/s,\(|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
         ;;
     ("eunit")
         if [ "$2" == "failed" ]; then
@@ -83,9 +82,9 @@ case $1 in
             fi
         fi
         url_text=`echo $text | sed 's/ /%20/g'`
-        eunit_log_url="$HISTORY_URL/eunit-output-$CI_PROJECT_NAME.txt"
+        eunit_log_url="$HISTORY_URL/eunit-output-$PROJECT_NAME.txt"
         cell="[\![$text](https://img.shields.io/badge/eunit-$url_text-$color.svg)]($eunit_log_url)"
-        sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
+        sed -i "/$PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
         ;;
     ("common_test")
         if [ "$2" == "failed" ]; then
@@ -118,9 +117,9 @@ case $1 in
             fi
         fi
         url_text=`echo $text | sed 's/ /%20/g'`
-        test_log_url="$HISTORY_URL/ct-output-$CI_PROJECT_NAME.txt"
-        cell="[\![$text](https://img.shields.io/badge/tests-$url_text-$color.svg)]($test_log_url)"
-        sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
+        test_log_url="$HISTORY_URL/ct-output-$PROJECT_NAME.txt"
+        cell="[\![$text](https://img.shields.io/badge/common_tests-$url_text-$color.svg)]($test_log_url)"
+        sed -i "/$PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
         ;;
     ("coverage")
         if [ "$2" == "failed" ]; then
@@ -140,9 +139,9 @@ case $1 in
             text="$coverage %"
         fi
         url_text=`echo $text | sed 's/%/%25/' | sed 's/ /%20/g'`
-        cover_log_url="$HISTORY_URL/cover-output-$CI_PROJECT_NAME.txt"
+        cover_log_url="$HISTORY_URL/cover-output-$PROJECT_NAME.txt"
         cell="[\![$text](https://img.shields.io/badge/coverage-$url_text-$color.svg)]($cover_log_url)"
-        sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
+        sed -i "/$PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
         ;;
     (*)
         echo "Invalid first parameter: $1"
@@ -150,5 +149,5 @@ case $1 in
 esac
 
 date=`TZ=UTC date "+%F %H:%M:%S %Z"`
-sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $date |," $dashboard_filename
+sed -i "/$PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $date |," $dashboard_filename
 

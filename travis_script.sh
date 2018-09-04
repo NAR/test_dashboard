@@ -5,6 +5,7 @@ eval "$(ssh-agent -s)"
 chmod 600 scripts/updater.key
 ssh-add scripts/updater.key
 
+export PROJECT_NAME=`echo $TRAVIS_REPO_SLUG | sed 's,/,-,g'`
 export REBAR_COLOR=none
 export TERM=dumb
 

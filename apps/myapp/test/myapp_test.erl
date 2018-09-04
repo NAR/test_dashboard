@@ -3,4 +3,4 @@
 -include_lib("eunit/include/eunit.hrl").
 
 hello_test() ->
-  hello.
+  myapp_app:status().

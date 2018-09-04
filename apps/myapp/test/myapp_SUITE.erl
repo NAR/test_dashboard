@@ -49,9 +49,11 @@ groups() ->
 %%% Overall setup/teardown
 %%%===================================================================
 init_per_suite(Config) ->
+    myapp_app:start(a, b),
     Config.
 
 end_per_suite(_Config) ->
+    myapp_app:stop(a),
     ok.
 
 

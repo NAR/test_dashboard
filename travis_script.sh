@@ -1,6 +1,10 @@
 #!/bin/bash
 set -x
 
+eval "$(ssh-agent -s)"
+chmod 600 scripts/updater.key
+ssh-add scripts/updater.key
+
 # Get the history (clone)
 scripts/history_clone.sh
 

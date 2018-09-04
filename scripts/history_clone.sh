@@ -8,7 +8,7 @@
 #
 
 #cd ${CI_PROJECT_DIR}
-
+set -x
 ssh-add scripts/updater.key
 git clone git@github.com:NAR/dashboard.git
 

@@ -26,7 +26,7 @@ if [ "$#" -lt 2 -o "$#" -gt 4 ]; then
 fi
 
 CI_PROJECT_NAME=test_dashboard
-HISTORY_URL=https://gitlab.com/mastercard/blockchain/ci_history/blob/master
+HISTORY_URL=https://github.com/NAR/dashboard/blob/master
 
 case $1 in
     ("dialyzer")
@@ -43,7 +43,7 @@ case $1 in
             text="$warnings warnings"
         fi
         url_text=`echo $text | sed 's/ /%20/g'`
-        dialyzer_log_url="$HISTORY_URL/dialyzer/$CI_PROJECT_NAME.log"
+        dialyzer_log_url="$HISTORY_URL/dialyzer-output-$CI_PROJECT_NAME.txt"
         cell="[\![$text](https://img.shields.io/badge/dialyzer-$url_text-$color.svg)]($dialyzer_log_url)"
         sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
         ;;
@@ -61,7 +61,7 @@ case $1 in
             fi
         fi
         url_text=`echo $text | sed 's/ /%20/g'`
-        build_log_url="$HISTORY_URL/build/$CI_PROJECT_NAME.log"
+        build_log_url="$HISTORY_URL/compile-output-$CI_PROJECT_NAME.txt"
         cell="[\![$text](https://img.shields.io/badge/build-$url_text-$color.svg)]($build_log_url)"
         sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
         ;;
@@ -83,7 +83,7 @@ case $1 in
             fi
         fi
         url_text=`echo $text | sed 's/ /%20/g'`
-        eunit_log_url="$HISTORY_URL/eunit/$CI_PROJECT_NAME.log"
+        eunit_log_url="$HISTORY_URL/eunit-output-$CI_PROJECT_NAME.txt"
         cell="[\![$text](https://img.shields.io/badge/eunit-$url_text-$color.svg)]($eunit_log_url)"
         sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
         ;;
@@ -118,7 +118,7 @@ case $1 in
             fi
         fi
         url_text=`echo $text | sed 's/ /%20/g'`
-        test_log_url="http://10.100.0.150:18080/$CI_PROJECT_NAME/latest/logs"
+        test_log_url="$HISTORY_URL/ct-output-$CI_PROJECT_NAME.txt"
         cell="[\![$text](https://img.shields.io/badge/tests-$url_text-$color.svg)]($test_log_url)"
         sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
         ;;
@@ -140,7 +140,7 @@ case $1 in
             text="$coverage %"
         fi
         url_text=`echo $text | sed 's/%/%25/' | sed 's/ /%20/g'`
-        cover_log_url="http://10.100.0.150:18080/$CI_PROJECT_NAME/latest/cover"
+        cover_log_url="$HISTORY_URL/cover-output-$CI_PROJECT_NAME.txt"
         cell="[\![$text](https://img.shields.io/badge/coverage-$url_text-$color.svg)]($cover_log_url)"
         sed -i "/$CI_PROJECT_NAME/s,\(|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|[^|]*|\)[^|]*|,\1 $cell |," $dashboard_filename
         ;;

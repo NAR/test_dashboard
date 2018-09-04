@@ -9,6 +9,7 @@
 
 #cd ${CI_PROJECT_DIR}
 set -x
+env
 lsb_release -a
 eval "$(ssh-agent -s)"
 chmod 600 scripts/updater.key

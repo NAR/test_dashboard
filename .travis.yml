@@ -4,3 +4,9 @@ otp_release:
 script: "./travis_script.sh"
 env:
   secure: uZGFpfWs0ZW8a6+2J3+yKzuZ1Ry1e4GnX1bCZs6N2L1I2l8U35jM+rjr9yX7/w3tXqv+TfZxH7KS7i/TnfQs14QDUGSGaoj4xMiF+iO4o9Sm08TbzQjsF8JhG4v5Cp/FiBIlGbQwZ0YdHymVztMqc5perA5D992SccYblWCILTUeDoSY6dTUswsYX9i1t3RHbfW++QAjRNXYoThRhjhDgKVTjqpJA3fN9fcHyNg8Nel54UdbkUZRCo/AR0jQsKCrIQ7rz9IYzdveniPHnYDIEWLbUwn8r2sU9S+1GR+6cyu0URzTNSkt6yTCsXf51n1suPaUHissx6WgfHgorIBSev6FtQjxElQOfJ4NA/bZfIOi3ZR8gmz7AcvGmCb7eoqT1WII/kz+Lj4h/DXM7wqtE1Wthe6/BidL0iIw8ncOlXXcg4yt9V6fxw7qin/W1Qq5d7XUd3XyoN9AHbAUN+FWW6duWtv0wkKrEYrdf+nQQnSvCc4zCcrQn+y4eheNpBRqRULqCqtZc4RQeXmVBx0KCxuVM2ZLdc2JRt1JJCmXd22yk+uG3DJSDEFlWxTxtUcd9RofkVXPzqVhLk54Dhs+IiYR8DADyZXUs6RS+z6f3BrWdxxMDb4usd2s+Gk4GSBWDCBnhLGxL4PxgzRxGkrpFzvSi7tZrmVbqZtek/oe4ZI=
+
+addons:
+  artifacts: true
+  paths:
+    - _build/test/cover
+    - _build/test/logs

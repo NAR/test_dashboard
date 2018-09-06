@@ -1,10 +1,11 @@
 #!/bin/bash
 set -x
 
+openssl aes-256-cbc -K $encrypted_de818089052b_key -iv $encrypted_de818089052b_iv -in scripts/updater.key.enc -out scripts/updater.key -d
+
 eval "$(ssh-agent -s)"
 chmod 600 scripts/updater.key
-#ssh-add scripts/updater.key
-sshpass -p "$SSH_KEY_PASSWORD" ssh-add scripts/updater.key
+ssh-add scripts/updater.key
 
 export PROJECT_NAME=`echo $TRAVIS_REPO_SLUG | sed 's,/,-,g'`
 export REBAR_COLOR=none

@@ -2,9 +2,9 @@
 set -x
 
 eval "$(ssh-agent -s)"
-echo "$MY_SECRET_ENV" | ssh-add /dev/stdin
-#chmod 600 scripts/updater.key
+chmod 600 scripts/updater.key
 #ssh-add scripts/updater.key
+sshpass -p "$SSH_KEY_PASSWORD" ssh-add scripts/updater.key
 
 export PROJECT_NAME=`echo $TRAVIS_REPO_SLUG | sed 's,/,-,g'`
 export REBAR_COLOR=none

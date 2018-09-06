@@ -7,6 +7,9 @@ env:
 
 addons:
   artifacts: true
-  paths:
-    - _build/test/cover
-    - _build/test/logs
+    debug: true
+    paths:
+      - _build/test/cover
+      - _build/test/logs
+    target_paths:
+      - /${TRAVIS_REPO_SLUG}/${TRAVIS_BUILD_NUMBER}/${TRAVIS_JOB_NUMBER}
